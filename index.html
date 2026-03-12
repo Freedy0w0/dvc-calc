@@ -3,44 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DVC 龍個性助手 - 全功能版</title>
+    <title>DVC 龍個性助手 - 電腦優化版</title>
     <style>
         :root { --primary: #2d5a27; --accent: #e7f4e9; --text: #333; --border: #c3e6cb; --danger: #d9534f; --dark-green: #1b4332; --gold: #f0ad4e; }
-        body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #f0f2f0; padding: 20px; color: var(--text); line-height: 1.4; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #f0f2f0; padding: 40px 20px; color: var(--text); line-height: 1.6; font-size: 18px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 30px; border-bottom: 3px solid var(--primary); padding-bottom: 15px; font-size: 32px; }
         
-        .section-title { font-weight: bold; margin-bottom: 12px; display: block; color: #555; border-left: 4px solid var(--primary); padding-left: 8px; }
+        .section-title { font-weight: bold; margin-bottom: 15px; display: block; color: #555; border-left: 6px solid var(--primary); padding-left: 12px; font-size: 22px; }
         
-        .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .input-card { background: var(--accent); padding: 12px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
-        .input-card label { font-weight: bold; color: var(--primary); margin-bottom: 5px; font-size: 14px; }
-        input[type="number"] { width: 70px; padding: 8px; border: 1px solid #99bfa1; border-radius: 5px; font-size: 16px; text-align: center; }
+        .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .input-card { background: var(--accent); padding: 15px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
+        .input-card label { font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 18px; }
+        input[type="number"] { width: 90px; padding: 10px; border: 2px solid #99bfa1; border-radius: 8px; font-size: 20px; text-align: center; }
 
-        .switch-group { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #eee; }
-        .switch-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch-group { background: #f9f9f9; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #eee; }
+        .switch-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+        .switch { position: relative; display: inline-block; width: 60px; height: 30px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 30px; }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(22px); }
+        input:checked + .slider:before { transform: translateX(30px); }
 
-        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 25px; }
-        .check-item { background: #fff; border: 1px solid #ddd; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; font-size: 13px; transition: 0.2s; }
-        .check-item:hover { border-color: var(--primary); }
-        .check-item input { margin-right: 10px; scale: 1.2; }
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 30px; }
+        .check-item { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; font-size: 16px; transition: 0.2s; font-weight: 500; }
+        .check-item:hover { border-color: var(--primary); background: #f9fff9; }
+        .check-item input { margin-right: 12px; scale: 1.4; }
 
-        button { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
-        button:hover { background: #1e3d1a; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        button { width: 100%; padding: 20px; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 24px; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #1e3d1a; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        #result { margin-top: 25px; display: none; }
-        .summary-header { font-size: 18px; margin-bottom: 15px; font-weight: bold; text-align: center; color: var(--text); }
-        .poison-msg { color: #856404; background: #fff3cd; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 14px; border: 1px solid #ffeeba; font-weight: bold; }
-        .result-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .result-card-header { background: #a8d5ba; padding: 10px; font-weight: bold; text-align: center; color: var(--primary); font-size: 16px; }
-        .val-bar { background: var(--dark-green); color: #fff; padding: 8px; margin: 10px; border-radius: 5px; text-align: center; font-size: 15px; font-weight: bold; }
-        .train-list { padding: 0 15px 15px 15px; font-size: 14px; color: var(--danger); font-weight: bold; line-height: 1.8; }
+        #result { margin-top: 40px; display: none; }
+        .summary-header { font-size: 24px; margin-bottom: 20px; font-weight: bold; text-align: center; color: #d9534f; }
+        .poison-msg { color: #856404; background: #fff3cd; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; font-size: 18px; border: 1px solid #ffeeba; font-weight: bold; }
+        .result-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .result-card-header { background: #a8d5ba; padding: 15px; font-weight: bold; text-align: center; color: var(--primary); font-size: 20px; }
+        .val-bar { background: var(--dark-green); color: #fff; padding: 12px; margin: 15px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; }
+        .train-list { padding: 0 20px 20px 20px; font-size: 17px; color: var(--danger); font-weight: bold; line-height: 2; }
         .highlight { color: var(--gold); }
     </style>
 </head>
@@ -59,27 +59,27 @@
 
     <div class="switch-group">
         <div class="switch-item">
-            <span> 允許使用注射毒液 (-10)</span>
+            <span style="font-weight: bold;"> 允許使用注射毒液 (最高項 -10)</span>
             <label class="switch"><input type="checkbox" id="poisonToggle"><span class="slider"></span></label>
         </div>
-        <div style="font-size: 12px; color: #666;">優先路徑：肌力 > 智力 > 爆發 > 集中</div>
+        <div style="font-size: 14px; color: #666; margin-top: 5px;">搜尋順序：肌力 ➔ 智力 ➔ 爆發 ➔ 集中</div>
     </div>
 
-    <span class="section-title">目標個性 (可複選)</span>
+    <span class="section-title">目標個性 (可多選)</span>
     <div class="checkbox-grid">
         <label class="check-item"><input type="checkbox" name="per" value="adored" checked> 憧憬的 (總和100)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="ordinary"> 平凡 (四項相同, ≦100)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="distracted"> 漫不經心 (禁集中/差≧15)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="ordinary"> 平凡 (四項相同)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="distracted"> 漫不經心 (項差≧15/禁集中)</label>
         <label class="check-item"><input type="checkbox" name="per" value="perfectionist"> 完美主義 (皆≧20)</label>
         <label class="check-item"><input type="checkbox" name="per" value="sparkling"> 亮晶晶 (差≧8/≧70)</label>
         <label class="check-item"><input type="checkbox" name="per" value="reed"> 蘆葦 (5xS, 5xP)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="joking"> 愛開玩笑 (尾數皆9)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="bright"> 璀璨 (皆≧25/尾數5)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="joking"> 愛開玩笑 (尾數9)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="bright"> 璀璨 (≧25/尾5)</label>
         <label class="check-item"><input type="checkbox" name="per" value="noble"> 氣度不凡 (3/5/9一輪)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="lonely"> 孤獨 (尾數皆1)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="lonely"> 孤獨 (尾數1)</label>
     </div>
 
-    <button onclick="startCalculation()"> 開始精密計算</button>
+    <button onclick="startCalculation()"> 開始精密路徑計算</button>
     <div id="result"></div>
 </div>
 
@@ -92,7 +92,14 @@ const SearchPreference = [0, 2, 3, 1];
 const Conditions = {
     adored: (s) => s.reduce((a,b)=>a+b, 0) === 100,
     ordinary: (s) => s.every(v => v === s[0]) && s.reduce((a,b)=>a+b,0) <= 100,
-    distracted: (s, p) => !p.some(step => step.idx === 1) && (Math.max(...s) - Math.min(...s) >= 15),
+    distracted: (s, p) => {
+        // 條件 1: 絕對不能有集中力(idx:1)的訓練路徑
+        if (p.some(step => step.idx === 1)) return false;
+        // 條件 2: 排序後，相鄰能力值差距必須 >= 15
+        let sorted = [...s].sort((a,b) => a-b);
+        for(let i=0; i<3; i++) if(sorted[i+1] - sorted[i] < 15) return false;
+        return true;
+    },
     perfectionist: (s) => s.every(v => v >= 20),
     sparkling: (s) => {
         let sorted = [...s].sort((a,b) => a-b);
@@ -116,13 +123,12 @@ const Conditions = {
 function solve(base, targets) {
     let queue = [{ stats: [...base], path: [] }];
     let visited = new Set();
-    let maxSteps = (targets.includes('noble') || targets.includes('reed')) ? 26 : 18;
+    let maxSteps = (targets.includes('noble') || targets.includes('reed') || targets.includes('distracted')) ? 28 : 18;
     
     while (queue.length > 0) {
         let { stats, path } = queue.shift();
         let key = stats.join(',') + (targets.includes('noble') ? "_" + path.length : "");
-        if (visited.has(key)) continue; 
-        visited.add(key);
+        if (visited.has(key)) continue; visited.add(key);
 
         if (targets.every(t => Conditions[t](stats, path))) return { stats, path };
         if (targets.includes('adored') && stats.reduce((a,b)=>a+b,0) > 100) continue;
@@ -146,7 +152,7 @@ function startCalculation() {
     const resArea = document.getElementById('result');
     
     resArea.style.display = "block";
-    resArea.innerHTML = "<div style='text-align:center;'> 正在運算路徑...</div>";
+    resArea.innerHTML = "<div style='text-align:center; font-size:20px;'> 正在運算最佳路徑，請稍後...</div>";
 
     setTimeout(() => {
         let finalResult = solve(base, selected);
@@ -162,10 +168,10 @@ function startCalculation() {
         }
 
         if (!finalResult) {
-            resArea.innerHTML = "<div class='fail' style='color:red; text-align:center; padding:20px; border:1px solid red; border-radius:10px;'> 無法達成目標：請檢查起始數值或個性組合是否衝突。</div>";
+            resArea.innerHTML = "<div style='color:red; text-align:center; padding:30px; border:2px solid red; border-radius:12px; font-size:20px; font-weight:bold;'> 無法達成目標：請嘗試開啟「注射毒液」或調整起始數值。</div>";
         } else {
-            let html = poisonUsed ? "<div class='poison-msg'> 已應用注射毒液：請先對最高項進行注射 (-10)</div>" : "";
-            html += `<div class='summary-header'>你最少需要進行 <span style='color:red;'>${finalResult.path.length}</span> 次訓練</div>`;
+            let html = poisonUsed ? "<div class='poison-msg'> 偵測到更優路徑：已套用「注射毒液」(-10 點最高屬性)</div>" : "";
+            html += `<div class='summary-header'>最少需進行 <span style='font-size:32px; color:#d9534f;'>${finalResult.path.length}</span> 次訓練</div>`;
             html += `<div class='matrix-grid'>`;
             for (let i of DisplayOrder) {
                 let steps = finalResult.path.filter(p => p.idx === i);
@@ -177,9 +183,9 @@ function startCalculation() {
                         <div class="train-list">
                             ${[9,5,3].map(v => {
                                 let c = steps.filter(s => s.val === v).length;
-                                return c > 0 ? `+${v} ${v==9?'PERFECT':v==5?'GOOD':'SO-SO'} × <span style='color:#333'>${c}</span><br>` : '';
+                                return c > 0 ? `+${v} ${v==9?'PERFECT':v==5?'GOOD':'SO-SO'} × <span style='color:#333; font-size:20px;'>${c}</span><br>` : '';
                             }).join('')}
-                            ${added === 0 ? '<span style="color:#aaa">+0 (無須訓練)</span>' : ''}
+                            ${added === 0 ? '<span style="color:#aaa">+0 (維持現狀)</span>' : ''}
                         </div>
                     </div>`;
             }
