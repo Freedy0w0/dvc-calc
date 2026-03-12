@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVC 龍個性助手 - 官方視覺版</title>
+    <style>
+        :root { --primary: #2d5a27; --accent: #e7f4e9; --text: #333; --border: #c3e6cb; --danger: #d9534f; --dark-green: #1b4332; }
+        body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #f0f2f0; padding: 20px; color: var(--text); }
+        .container { max-width: 700px; margin: 0 auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .section-title { font-weight: bold; margin-bottom: 10px; display: block; color: #555; border-left: 4px solid var(--primary); padding-left: 8px; }
+        .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .input-card { background: var(--accent); padding: 12px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
+        .input-card label { font-weight: bold; color: var(--primary); margin-bottom: 5px; font-size: 15px; }
+        input[type="number"] { width: 70px; padding: 8px; border: 1px solid #99bfa1; border-radius: 5px; font-size: 16px; text-align: center; }
+        .pref-note { background: #f9f9f9; padding: 10px; border-radius: 8px; font-size: 13px; color: #666; margin-bottom: 20px; border: 1px dashed #ccc; }
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 25px; }
+        .check-item { background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; font-size: 13px; transition: 0.2s; }
+        .check-item input { margin-right: 8px; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: bold; margin-bottom: 20px; }
+        #result { margin-top: 20px; display: none; }
+        .summary-header { font-size: 18px; margin-bottom: 15px; font-weight: bold; color: var(--danger); text-align: center; }
+        .result-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #fdfdfd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .result-card-header { background: #a8d5ba; padding: 8px; font-weight: bold; text-align: center; color: #2d5a27; border-bottom: 1px solid var(--border); font-size: 16px; }
+        .target-val-bar { background: var(--dark-green); color: #fff; padding: 6px; margin: 10px; border-radius: 5px; text-align: center; font-size: 15px; font-weight: bold; }
+        .train-detail { padding: 0 15px 15px 15px; font-family: monospace; font-size: 14px; color: var(--danger); line-height: 1.6; font-weight: bold; }
+        .fail { background: #fff5f5; border: 1px solid #fc8181; color: #c53030; padding: 20px; border-radius: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2> DVC 訓練路徑助手</h2>
+    
+    <span class="section-title">輸入基礎數值</span>
+    <div class="matrix-grid">
+        <div class="input-card"><label> 爆發力</label><input type="number" id="v3" value="0"></div>
+        <div class="input-card"><label> 肌力</label><input type="number" id="v0" value="0"></div>
+        <div class="input-card"><label> 集中力</label><input type="number" id="v1" value="0"></div>
+        <div class="input-card"><label> 智力</label><input type="number" id="v2" value="0"></div>
+    </div>
+
+    <div class="pref-note">
+        <strong> 優先搜尋路徑：</strong><br>
+         肌力 ➔  智力 ➔  爆發 ➔  集中
+    </div>
+
+    <span class="section-title">目標個性</span>
+    <div class="checkbox-grid">
+        <label class="check-item"><input type="checkbox" name="per" value="adored" checked> 憧憬的 (總和=100)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="perfectionist"> 完美主義 (皆≧20)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="ordinary"> 平凡 (四項相同, ≦100)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="sparkling"> 亮晶晶 (差≧8, ≧70)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="reed"> 蘆葦 (5*P, 5*S)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="distracted"> 漫不經心 (項差≧15/禁集中)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="joking"> 愛開玩笑 (尾數9)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="bright"> 璀璨 (≧25, 尾5)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="noble"> 氣度不凡 (3/5/9一輪)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="lonely"> 孤獨 (尾數1)</label>
+    </div>
+
+    <button onclick="startCalculation()"> 開始精密計算</button>
+    <div id="result"></div>
+</div>
+
+<script>
+const DisplayOrder = [3, 0, 1, 2];
+const SearchPreference = [0, 2, 3, 1]; 
+const StatNames = ["肌力", "集中力", "智力", "爆發力"];
+const Icons = ["", "", "", ""];
+
+const Conditions = {
+    adored: (s) => s.reduce((a,b)=>a+b, 0) === 100,
+    perfectionist: (s) => s.every(v => v >= 20),
+    ordinary: (s) => s.every(v => v === s[0]) && s.reduce((a,b)=>a+b,0) <= 100,
+    sparkling: (s) => {
+        let sorted = [...s].sort((a,b) => a-b);
+        for(let i=0; i<3; i++) if(sorted[i+1] - sorted[i] < 8) return false;
+        return s.some(v => v >= 70);
+    },
+    reed: (s, p) => {
+        let pCount = p.filter(x => x.val === 9).length;
+        let sCount = p.filter(x => x.val === 3).length;
+        let sorted = [...s].sort((a,b) => a-b);
+        for(let i=0; i<3; i++) if(sorted[i+1] - sorted[i] < 1) return false;
+        return pCount >= 5 && sCount >= 5;
+    },
+    distracted: (s, p) => {
+        if (p.some(step => step.idx === 1)) return false;
+        let sorted = [...s].sort((a,b) => a-b);
+        for(let i=0; i<3; i++) if(sorted[i+1] - sorted[i] < 15) return false;
+        return true;
+    },
+    joking: (s) => (new Set(s)).size === 4 && s.every(v => v % 10 === 9),
+    bright: (s) => s.every(v => v >= 25 && v % 10 === 5),
+    noble: (s, p) => {
+        for(let i=0; i<4; i++) {
+            let trains = p.filter(step => step.idx === i).map(step => step.val);
+            if(![3,5,9].every(v => trains.includes(v))) return false;
+        }
+        return true;
+    },
+    lonely: (s) => s.every(v => v % 10 === 1)
+};
+
+function solve(base, targets) {
+    let queue = [{ stats: base, path: [] }];
+    let visited = new Set();
+    let maxSteps = (targets.includes('noble') || targets.includes('reed')) ? 24 : 18;
+    
+    while (queue.length > 0) {
+        let { stats, path } = queue.shift();
+        let key = stats.join(',') + (targets.includes('noble') ? "_" + path.length : "");
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        if (targets.every(t => Conditions[t](stats, path))) return { stats, path };
+        if (targets.includes('adored') && stats.reduce((a,b)=>a+b,0) > 100) continue;
+        if (path.length >= maxSteps) continue;
+
+        for (let i of SearchPreference) { 
+            if (targets.includes('distracted') && i === 1) continue;
+            for (let v of [9, 5, 3]) {
+                let nextStats = [...stats];
+                nextStats[i] += v;
+                queue.push({ stats: nextStats, path: [...path, { idx: i, val: v }] });
+            }
+        }
+    }
+    return null;
+}
+
+function startCalculation() {
+    const base = [0,1,2,3].map(i => parseInt(document.getElementById('v'+i).value) || 0);
+    const selected = Array.from(document.querySelectorAll('input[name="per"]:checked')).map(el => el.value);
+    const resArea = document.getElementById('result');
+    resArea.style.display = "block";
+    resArea.innerHTML = "<div class='summary-header'> 正在搜尋最佳訓練路徑...</div>";
+    setTimeout(() => {
+        const result = solve(base, selected);
+        if (!result) {
+            resArea.innerHTML = "<div class='fail'> 無法達成目標：條件衝突或數值溢出。</div>";
+        } else {
+            renderResult(base, result);
+        }
+    }, 50);
+}
+
+function renderResult(base, result) {
+    const resArea = document.getElementById('result');
+    let html = `<div class="summary-header">你最少需要進行 ${result.path.length} 次訓練</div>`;
+    html += `<div class="matrix-grid">`;
+    for (let i of DisplayOrder) {
+        const steps = result.path.filter(p => p.idx === i);
+        const totalAdd = steps.reduce((sum, p) => sum + p.val, 0);
+        const c3 = steps.filter(p => p.val === 3).length;
+        const c5 = steps.filter(p => p.val === 5).length;
+        const c9 = steps.filter(p => p.val === 9).length;
+        html += `
+            <div class="result-card">
+                <div class="result-card-header">${Icons[i]} ${StatNames[i]}訓練</div>
+                <div class="target-val-bar">${StatNames[i]}：${base[i]}(+${totalAdd})</div>
+                <div class="train-detail">
+                    ${c3 > 0 ? `+3 SO-SO × ${c3}<br>` : ''}
+                    ${c5 > 0 ? `+5 GOOD × ${c5}<br>` : ''}
+                    ${c9 > 0 ? `+9 PERFECT × ${c9}<br>` : ''}
+                    ${totalAdd === 0 ? '+0 (無須訓練)' : ''}
+                </div>
+            </div>`;
+    }
+    html += `</div>`;
+    resArea.innerHTML = html;
+}
+</script>
+</body>
+</html>
