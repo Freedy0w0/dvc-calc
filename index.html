@@ -3,29 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DVC 龍個性助手 - 官方視覺版</title>
+    <title>DVC 龍個性助手 - 全功能版</title>
     <style>
-        :root { --primary: #2d5a27; --accent: #e7f4e9; --text: #333; --border: #c3e6cb; --danger: #d9534f; --dark-green: #1b4332; }
-        body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #f0f2f0; padding: 20px; color: var(--text); }
-        .container { max-width: 700px; margin: 0 auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        :root { --primary: #2d5a27; --accent: #e7f4e9; --text: #333; --border: #c3e6cb; --danger: #d9534f; --dark-green: #1b4332; --gold: #f0ad4e; }
+        body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #f0f2f0; padding: 20px; color: var(--text); line-height: 1.4; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         h2 { text-align: center; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
-        .section-title { font-weight: bold; margin-bottom: 10px; display: block; color: #555; border-left: 4px solid var(--primary); padding-left: 8px; }
+        
+        .section-title { font-weight: bold; margin-bottom: 12px; display: block; color: #555; border-left: 4px solid var(--primary); padding-left: 8px; }
+        
         .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .input-card { background: var(--accent); padding: 12px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
-        .input-card label { font-weight: bold; color: var(--primary); margin-bottom: 5px; font-size: 15px; }
+        .input-card label { font-weight: bold; color: var(--primary); margin-bottom: 5px; font-size: 14px; }
         input[type="number"] { width: 70px; padding: 8px; border: 1px solid #99bfa1; border-radius: 5px; font-size: 16px; text-align: center; }
-        .pref-note { background: #f9f9f9; padding: 10px; border-radius: 8px; font-size: 13px; color: #666; margin-bottom: 20px; border: 1px dashed #ccc; }
-        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 25px; }
-        .check-item { background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; font-size: 13px; transition: 0.2s; }
-        .check-item input { margin-right: 8px; }
-        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: bold; margin-bottom: 20px; }
-        #result { margin-top: 20px; display: none; }
-        .summary-header { font-size: 18px; margin-bottom: 15px; font-weight: bold; color: var(--danger); text-align: center; }
-        .result-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #fdfdfd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .result-card-header { background: #a8d5ba; padding: 8px; font-weight: bold; text-align: center; color: #2d5a27; border-bottom: 1px solid var(--border); font-size: 16px; }
-        .target-val-bar { background: var(--dark-green); color: #fff; padding: 6px; margin: 10px; border-radius: 5px; text-align: center; font-size: 15px; font-weight: bold; }
-        .train-detail { padding: 0 15px 15px 15px; font-family: monospace; font-size: 14px; color: var(--danger); line-height: 1.6; font-weight: bold; }
-        .fail { background: #fff5f5; border: 1px solid #fc8181; color: #c53030; padding: 20px; border-radius: 10px; text-align: center; }
+
+        .switch-group { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #eee; }
+        .switch-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 25px; }
+        .check-item { background: #fff; border: 1px solid #ddd; padding: 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; font-size: 13px; transition: 0.2s; }
+        .check-item:hover { border-color: var(--primary); }
+        .check-item input { margin-right: 10px; scale: 1.2; }
+
+        button { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #1e3d1a; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+        #result { margin-top: 25px; display: none; }
+        .summary-header { font-size: 18px; margin-bottom: 15px; font-weight: bold; text-align: center; color: var(--text); }
+        .poison-msg { color: #856404; background: #fff3cd; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center; font-size: 14px; border: 1px solid #ffeeba; font-weight: bold; }
+        .result-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .result-card-header { background: #a8d5ba; padding: 10px; font-weight: bold; text-align: center; color: var(--primary); font-size: 16px; }
+        .val-bar { background: var(--dark-green); color: #fff; padding: 8px; margin: 10px; border-radius: 5px; text-align: center; font-size: 15px; font-weight: bold; }
+        .train-list { padding: 0 15px 15px 15px; font-size: 14px; color: var(--danger); font-weight: bold; line-height: 1.8; }
+        .highlight { color: var(--gold); }
     </style>
 </head>
 <body>
@@ -41,23 +57,26 @@
         <div class="input-card"><label> 智力</label><input type="number" id="v2" value="0"></div>
     </div>
 
-    <div class="pref-note">
-        <strong> 優先搜尋路徑：</strong><br>
-         肌力 ➔  智力 ➔  爆發 ➔  集中
+    <div class="switch-group">
+        <div class="switch-item">
+            <span> 允許使用注射毒液 (-10)</span>
+            <label class="switch"><input type="checkbox" id="poisonToggle"><span class="slider"></span></label>
+        </div>
+        <div style="font-size: 12px; color: #666;">優先路徑：肌力 > 智力 > 爆發 > 集中</div>
     </div>
 
-    <span class="section-title">目標個性</span>
+    <span class="section-title">目標個性 (可複選)</span>
     <div class="checkbox-grid">
-        <label class="check-item"><input type="checkbox" name="per" value="adored" checked> 憧憬的 (總和=100)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="perfectionist"> 完美主義 (皆≧20)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="adored" checked> 憧憬的 (總和100)</label>
         <label class="check-item"><input type="checkbox" name="per" value="ordinary"> 平凡 (四項相同, ≦100)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="sparkling"> 亮晶晶 (差≧8, ≧70)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="reed"> 蘆葦 (5*P, 5*S)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="distracted"> 漫不經心 (項差≧15/禁集中)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="joking"> 愛開玩笑 (尾數9)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="bright"> 璀璨 (≧25, 尾5)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="distracted"> 漫不經心 (禁集中/差≧15)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="perfectionist"> 完美主義 (皆≧20)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="sparkling"> 亮晶晶 (差≧8/≧70)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="reed"> 蘆葦 (5xS, 5xP)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="joking"> 愛開玩笑 (尾數皆9)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="bright"> 璀璨 (皆≧25/尾數5)</label>
         <label class="check-item"><input type="checkbox" name="per" value="noble"> 氣度不凡 (3/5/9一輪)</label>
-        <label class="check-item"><input type="checkbox" name="per" value="lonely"> 孤獨 (尾數1)</label>
+        <label class="check-item"><input type="checkbox" name="per" value="lonely"> 孤獨 (尾數皆1)</label>
     </div>
 
     <button onclick="startCalculation()"> 開始精密計算</button>
@@ -65,15 +84,16 @@
 </div>
 
 <script>
-const DisplayOrder = [3, 0, 1, 2];
-const SearchPreference = [0, 2, 3, 1]; 
 const StatNames = ["肌力", "集中力", "智力", "爆發力"];
 const Icons = ["", "", "", ""];
+const DisplayOrder = [3, 0, 1, 2];
+const SearchPreference = [0, 2, 3, 1];
 
 const Conditions = {
     adored: (s) => s.reduce((a,b)=>a+b, 0) === 100,
-    perfectionist: (s) => s.every(v => v >= 20),
     ordinary: (s) => s.every(v => v === s[0]) && s.reduce((a,b)=>a+b,0) <= 100,
+    distracted: (s, p) => !p.some(step => step.idx === 1) && (Math.max(...s) - Math.min(...s) >= 15),
+    perfectionist: (s) => s.every(v => v >= 20),
     sparkling: (s) => {
         let sorted = [...s].sort((a,b) => a-b);
         for(let i=0; i<3; i++) if(sorted[i+1] - sorted[i] < 8) return false;
@@ -82,49 +102,37 @@ const Conditions = {
     reed: (s, p) => {
         let pCount = p.filter(x => x.val === 9).length;
         let sCount = p.filter(x => x.val === 3).length;
-        let sorted = [...s].sort((a,b) => a-b);
-        for(let i=0; i<3; i++) if(sorted[i+1] - sorted[i] < 1) return false;
         return pCount >= 5 && sCount >= 5;
-    },
-    distracted: (s, p) => {
-        if (p.some(step => step.idx === 1)) return false;
-        let sorted = [...s].sort((a,b) => a-b);
-        for(let i=0; i<3; i++) if(sorted[i+1] - sorted[i] < 15) return false;
-        return true;
     },
     joking: (s) => (new Set(s)).size === 4 && s.every(v => v % 10 === 9),
     bright: (s) => s.every(v => v >= 25 && v % 10 === 5),
-    noble: (s, p) => {
-        for(let i=0; i<4; i++) {
-            let trains = p.filter(step => step.idx === i).map(step => step.val);
-            if(![3,5,9].every(v => trains.includes(v))) return false;
-        }
-        return true;
-    },
+    noble: (s, p) => [0,1,2,3].every(i => {
+        let t = p.filter(x => x.idx === i).map(x => x.val);
+        return [3,5,9].every(v => t.includes(v));
+    }),
     lonely: (s) => s.every(v => v % 10 === 1)
 };
 
 function solve(base, targets) {
-    let queue = [{ stats: base, path: [] }];
+    let queue = [{ stats: [...base], path: [] }];
     let visited = new Set();
-    let maxSteps = (targets.includes('noble') || targets.includes('reed')) ? 24 : 18;
+    let maxSteps = (targets.includes('noble') || targets.includes('reed')) ? 26 : 18;
     
     while (queue.length > 0) {
         let { stats, path } = queue.shift();
         let key = stats.join(',') + (targets.includes('noble') ? "_" + path.length : "");
-        if (visited.has(key)) continue;
+        if (visited.has(key)) continue; 
         visited.add(key);
 
         if (targets.every(t => Conditions[t](stats, path))) return { stats, path };
         if (targets.includes('adored') && stats.reduce((a,b)=>a+b,0) > 100) continue;
         if (path.length >= maxSteps) continue;
 
-        for (let i of SearchPreference) { 
+        for (let i of SearchPreference) {
             if (targets.includes('distracted') && i === 1) continue;
             for (let v of [9, 5, 3]) {
-                let nextStats = [...stats];
-                nextStats[i] += v;
-                queue.push({ stats: nextStats, path: [...path, { idx: i, val: v }] });
+                let next = [...stats]; next[i] += v;
+                queue.push({ stats: next, path: [...path, { idx: i, val: v }] });
             }
         }
     }
@@ -133,44 +141,51 @@ function solve(base, targets) {
 
 function startCalculation() {
     const base = [0,1,2,3].map(i => parseInt(document.getElementById('v'+i).value) || 0);
+    const usePoison = document.getElementById('poisonToggle').checked;
     const selected = Array.from(document.querySelectorAll('input[name="per"]:checked')).map(el => el.value);
     const resArea = document.getElementById('result');
+    
     resArea.style.display = "block";
-    resArea.innerHTML = "<div class='summary-header'> 正在搜尋最佳訓練路徑...</div>";
+    resArea.innerHTML = "<div style='text-align:center;'> 正在運算路徑...</div>";
+
     setTimeout(() => {
-        const result = solve(base, selected);
-        if (!result) {
-            resArea.innerHTML = "<div class='fail'> 無法達成目標：條件衝突或數值溢出。</div>";
+        let finalResult = solve(base, selected);
+        let poisonUsed = false;
+
+        if (usePoison) {
+            let maxIdx = base.indexOf(Math.max(...base));
+            let pBase = [...base]; pBase[maxIdx] = Math.max(0, pBase[maxIdx] - 10);
+            let pRes = solve(pBase, selected);
+            if (pRes && (!finalResult || pRes.path.length < finalResult.path.length)) {
+                finalResult = pRes; poisonUsed = true;
+            }
+        }
+
+        if (!finalResult) {
+            resArea.innerHTML = "<div class='fail' style='color:red; text-align:center; padding:20px; border:1px solid red; border-radius:10px;'> 無法達成目標：請檢查起始數值或個性組合是否衝突。</div>";
         } else {
-            renderResult(base, result);
+            let html = poisonUsed ? "<div class='poison-msg'> 已應用注射毒液：請先對最高項進行注射 (-10)</div>" : "";
+            html += `<div class='summary-header'>你最少需要進行 <span style='color:red;'>${finalResult.path.length}</span> 次訓練</div>`;
+            html += `<div class='matrix-grid'>`;
+            for (let i of DisplayOrder) {
+                let steps = finalResult.path.filter(p => p.idx === i);
+                let added = steps.reduce((a, b) => a + b.val, 0);
+                html += `
+                    <div class="result-card">
+                        <div class="result-card-header">${Icons[i]} ${StatNames[i]}訓練</div>
+                        <div class="val-bar">${StatNames[i]}：${base[i]} <span class="highlight">(+${added})</span></div>
+                        <div class="train-list">
+                            ${[9,5,3].map(v => {
+                                let c = steps.filter(s => s.val === v).length;
+                                return c > 0 ? `+${v} ${v==9?'PERFECT':v==5?'GOOD':'SO-SO'} × <span style='color:#333'>${c}</span><br>` : '';
+                            }).join('')}
+                            ${added === 0 ? '<span style="color:#aaa">+0 (無須訓練)</span>' : ''}
+                        </div>
+                    </div>`;
+            }
+            resArea.innerHTML = html + "</div>";
         }
     }, 50);
-}
-
-function renderResult(base, result) {
-    const resArea = document.getElementById('result');
-    let html = `<div class="summary-header">你最少需要進行 ${result.path.length} 次訓練</div>`;
-    html += `<div class="matrix-grid">`;
-    for (let i of DisplayOrder) {
-        const steps = result.path.filter(p => p.idx === i);
-        const totalAdd = steps.reduce((sum, p) => sum + p.val, 0);
-        const c3 = steps.filter(p => p.val === 3).length;
-        const c5 = steps.filter(p => p.val === 5).length;
-        const c9 = steps.filter(p => p.val === 9).length;
-        html += `
-            <div class="result-card">
-                <div class="result-card-header">${Icons[i]} ${StatNames[i]}訓練</div>
-                <div class="target-val-bar">${StatNames[i]}：${base[i]}(+${totalAdd})</div>
-                <div class="train-detail">
-                    ${c3 > 0 ? `+3 SO-SO × ${c3}<br>` : ''}
-                    ${c5 > 0 ? `+5 GOOD × ${c5}<br>` : ''}
-                    ${c9 > 0 ? `+9 PERFECT × ${c9}<br>` : ''}
-                    ${totalAdd === 0 ? '+0 (無須訓練)' : ''}
-                </div>
-            </div>`;
-    }
-    html += `</div>`;
-    resArea.innerHTML = html;
 }
 </script>
 </body>
